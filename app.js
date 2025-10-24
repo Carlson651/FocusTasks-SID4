@@ -7,7 +7,7 @@
    ============================================================ */
 
 const SID4 = '9915';
-const STORAGE_KEY = focustasks_${SID4};
+const STORAGE_KEY = focustasks_$[SID4];
 
 /* ---------------------------
    Micro-comment (closure store):
