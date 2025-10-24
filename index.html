@@ -1,43 +1,40 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>FocusTasks 9915</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FocusTasks 0211</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
-    <h1 id="app-title">FocusTasks 9915</h1>
-    <div id="analytics" aria-live="polite">Active: 0 · Done: 0 · Done %: 0.0%</div>
+    <h1>FocusTasks 0211</h1>
+    <div id="analytics">Active: 0 · Done: 0 · Done %: 0%</div>
+    <button id="themeToggle" type="button" aria-label="Toggle dark mode">🌙</button>
   </header>
 
-  <main id="lists">
+  <main>
     <section aria-labelledby="active-heading">
-      <h2 id="active-heading">Active</h2>
-
-      <form id="add-form" novalidate>
-        <label for="task-input">Add task</label>
-        <div class="input-row">
-          <input id="task-input" name="title" type="text" autocomplete="off" />
-          <button id="add-button" type="submit">Add</button>
-        </div>
-        <div id="error" role="alert" aria-live="assertive" class="error" hidden></div>
+      <h2 id="active-heading">Active Tasks</h2>
+      <form id="taskForm">
+        <label for="taskInput">Task:</label>
+        <input type="text" id="taskInput" name="taskInput" required>
+        <button type="submit">Add</button>
       </form>
-
-      <div id="active-list-wrapper">
-        <ul id="active-list" aria-live="polite" tabindex="0"></ul>
-      </div>
+      <p id="errorMsg" class="error"></p>
+      <ul id="activeList" class="task-list"></ul>
     </section>
 
     <section aria-labelledby="done-heading">
-      <h2 id="done-heading">Done</h2>
-      <div id="done-list-wrapper">
-        <ul id="done-list" aria-live="polite" tabindex="0"></ul>
-      </div>
+      <h2 id="done-heading">Done Tasks</h2>
+      <ul id="doneList" class="task-list"></ul>
     </section>
   </main>
 
-  <script src="app.js" defer></script>
+  <footer>
+    <p>FocusTasks 0211 — Vanilla JS To-Do App</p>
+  </footer>
+
+  <script src="app.js"></script>
 </body>
 </html>
