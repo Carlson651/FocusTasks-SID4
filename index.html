@@ -7,37 +7,33 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="site-header">
+  <header>
     <h1 id="app-title">FocusTasks 9915</h1>
     <div id="analytics" aria-live="polite">Active: 0 · Done: 0 · Done %: 0.0%</div>
   </header>
 
-  <main id="app" class="container" role="main">
-    <!-- Add task form -->
-    <section class="add-area" aria-labelledby="add-heading">
-      <h2 id="add-heading" class="visually-hidden">Add task</h2>
+  <main id="lists">
+    <section aria-labelledby="active-heading">
+      <h2 id="active-heading">Active</h2>
+
       <form id="add-form" novalidate>
-        <label for="task-input">New Task</label>
-        <input id="task-input" name="title" type="text" autocomplete="off" required />
-        <button type="submit" id="add-btn">Add</button>
+        <label for="task-input">Add task</label>
+        <div class="input-row">
+          <input id="task-input" name="title" type="text" autocomplete="off" />
+          <button id="add-button" type="submit">Add</button>
+        </div>
+        <div id="error" role="alert" aria-live="assertive" class="error" hidden></div>
       </form>
-      <div id="error" role="alert" aria-live="assertive" class="error" hidden></div>
+
+      <div id="active-list-wrapper">
+        <ul id="active-list" aria-live="polite" tabindex="0"></ul>
+      </div>
     </section>
 
-    <!-- Lists container (will be responsive) -->
-    <section class="lists" id="lists-wrapper">
-      <div class="list-col" aria-labelledby="active-heading">
-        <h2 id="active-heading">Active</h2>
-        <ul id="active-list" class="task-list" data-area="active" tabindex="0">
-          <!-- delegated rendering -->
-        </ul>
-      </div>
-
-      <div class="list-col" aria-labelledby="done-heading">
-        <h2 id="done-heading">Done</h2>
-        <ul id="done-list" class="task-list" data-area="done" tabindex="0">
-          <!-- delegated rendering -->
-        </ul>
+    <section aria-labelledby="done-heading">
+      <h2 id="done-heading">Done</h2>
+      <div id="done-list-wrapper">
+        <ul id="done-list" aria-live="polite" tabindex="0"></ul>
       </div>
     </section>
   </main>
