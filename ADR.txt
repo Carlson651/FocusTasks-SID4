@@ -1,0 +1,27 @@
+Architecture Decision Record - FocusTasks 9915
+Date: 2025-10-24
+
+Context:
+- Vanilla HTML/CSS/JS environment. No frameworks or external libs allowed.
+- Requirements: closure-based persistence, single media query, no loops for core transforms,
+  safe rendering, event delegation and simple analytics.
+
+Decisions:
+1. Data store: chosen closure-based factory createStore(storageKey) that returns an API
+   { add, toggle, remove, list }. This isolates state and enables deterministic testing.
+   Persist on every mutation to localStorage under key focustasks_9915.
+
+2. Transform approach: list transforms (toggle/remove/add) implemented using functional
+   methods only (map, filter, spread operator) to comply with the "no loops" constraint.
+
+3. Rendering & XSS: used a minimal escapeHTML() utility and inserted escaped user text
+   via innerHTML to keep markup simple while ensuring user content is escaped. All
+   other DOM composition uses safe API (createElement, textContent) where possible.
+
+4. Event handling: centralized delegated handler attached to the main app wrapper to
+   handle form submit and clicks for toggle/delete actions (keeps per-row listeners out).
+
+Consequences:
+- Pros: Satisfies exam constraints, testable store, no global mutable variables.
+- Cons: client-only escaping; for multi-user/server scenarios we would implement
+  server-side sanitization and a strict CSP.
