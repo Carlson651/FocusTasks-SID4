@@ -1,5 +1,9 @@
 /* app.js
-
+   IST4035 practical solution — FocusTasks 9915
+   - Closure-based store API as required
+   - Event delegation on the main app wrapper
+   - Uses only map/filter/reduce for list transforms
+   - Escapes user input before inserting into DOM (see escapeHTML)
 */
 
 /* === Configuration / SID4 === */
