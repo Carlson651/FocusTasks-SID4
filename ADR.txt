@@ -1,27 +1,24 @@
-Architecture Decision Record - FocusTasks 9915
+Title: Closure-based client-side store for FocusTasks
 Date: 2025-10-24
+Status: accepted
 
 Context:
-- Vanilla HTML/CSS/JS environment. No frameworks or external libs allowed.
-- Requirements: closure-based persistence, single media query, no loops for core transforms,
-  safe rendering, event delegation and simple analytics.
+A small single-user client-side task manager is required with persistent storage,
+no global mutable state, safe rendering to avoid XSS, and a simple API for add/toggle/remove/list.
 
-Decisions:
-1. Data store: chosen closure-based factory createStore(storageKey) that returns an API
-   { add, toggle, remove, list }. This isolates state and enables deterministic testing.
-   Persist on every mutation to localStorage under key focustasks_9915.
-
-2. Transform approach: list transforms (toggle/remove/add) implemented using functional
-   methods only (map, filter, spread operator) to comply with the "no loops" constraint.
-
-3. Rendering & XSS: used a minimal escapeHTML() utility and inserted escaped user text
-   via innerHTML to keep markup simple while ensuring user content is escaped. All
-   other DOM composition uses safe API (createElement, textContent) where possible.
-
-4. Event handling: centralized delegated handler attached to the main app wrapper to
-   handle form submit and clicks for toggle/delete actions (keeps per-row listeners out).
+Decision:
+- Implement a closure-based store factory createStore(storageKey) that returns { add, toggle, remove, list }.
+  The store hydrates from localStorage on init and persists on every mutation under focustasks_9915.
+- Use only map/filter/reduce/concat for list transforms to avoid explicit loops and ensure
+  immutable-style updates.
+- Render user-provided titles using a small escapeHtml helper and set escaped content via innerHTML
+  (or textContent where appropriate) to prevent injection.
+- Use a single delegated listener on the lists' parent for toggle/delete actions and a form submit
+  listener for adds to preserve keyboard behavior (Enter submits).
+- Single media query at min-width: 481px for responsive 1→2 column layout.
 
 Consequences:
-- Pros: Satisfies exam constraints, testable store, no global mutable variables.
-- Cons: client-only escaping; for multi-user/server scenarios we would implement
-  server-side sanitization and a strict CSP.
+- No top-level tasks variable; store operations are confined to the closure. This reduces accidental
+  mutation and improves testability.
+- Client-side escaping mitigates injection for this single-user app; for multi-user or server-rendered
+  contexts server-side escaping and CSP are required as well.
